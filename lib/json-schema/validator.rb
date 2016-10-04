@@ -145,6 +145,7 @@ module JSON
       return ref_uri if ref_uri.absolute?
       # This is a self reference and thus the schema does not need to be re-loaded
       return parent_schema_uri if ref_uri.path.empty?
+      return File.join @options[:ref_base_path], ref_uri if @options[:ref_base_path]
 
       uri = JSON::Util::URI.strip_fragment(parent_schema_uri.dup)
       Util::URI.normalized_uri(uri.join(ref_uri.path))
